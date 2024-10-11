@@ -18,27 +18,26 @@ def read_csv(csv_input_path):
         for line in csv_reader:
             if line[0] == 'p':  
                 if graph is not None:
-                    graphs.append(graph)  
+                    graphs.append(graph)  #add the previous graph to the list
+                #create new graph
                 graph = {'type': line[1], 'vertices': int(line[2]), 'edges': []}  
             elif line[0] == 'v':  
                 vertex = line[1]
                 if vertex not in graph:
                     graph[vertex] = []
-            elif line[0] == 'e':  
+            elif line[0] == 'e': 
                 source = line[1]
                 target = line[2]
                 weight = float(line[3])
-                
-                if source not in graph:
-                    graph[source] = []
-                graph[source].append((target, weight))  
-                
+                graph[source].append((target, weight))  #add directed edge
+                if graph['type'] == 'u':  #if graph is undirected, add reverse edge
+                    graph[target].append((source, weight))
                 graph['edges'].append((source, target, weight))
-    
-    if graph is not None:
-        graphs.append(graph)
-    
-    return graphs
+        
+        if graph is not None:
+            graphs.append(graph)
+        
+        return graphs
 
 #find the hamiltonian cycle of the graph
 def find_hamiltonian_cycle(graph, start_vertex, path, sum_path, main_sum, best_path_sum):
@@ -71,9 +70,9 @@ def hamiltonian_cycle_output(hamiltonian_cycle,exec_time,graph):
         f.write(f"Execution Time: {exec_time} seconds\n")
         f.write("\n")
 
+
 #make the graph --> list of graphs
 graphs = read_csv('graphs.csv')
-
 times = []
 sizes = []
 #loop through all graphs 
@@ -101,8 +100,7 @@ for graph in graphs:
 
     hamiltonian_cycle = (best_path_sum[0], main_sum[0])
     hamiltonian_cycle_output(hamiltonian_cycle,execution_time,graph)
-
-
+ 
 #create a chart that has the time in y axis and size in x axis 
 print(times)
 print(sizes)
