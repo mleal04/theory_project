@@ -11,7 +11,7 @@ def read_csv(csv_input_path):
     graphs = []
     graph = None
     
-    # Open and read the CSV file
+    #open and read the CSV file
     with open(csv_input_path, newline='', encoding='utf-8') as csvfile:
         csv_reader = csv.reader(csvfile)
 
