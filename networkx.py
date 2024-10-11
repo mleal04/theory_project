@@ -5,14 +5,14 @@ import matplotlib.pyplot as plt
 networkx code i found from repo
 '''
 def create_graph(csv_input):
-    # Extract header and problem parameters
+    #extract header and problem parameters
     header = csv_input[0]
     problem = csv_input[1]
     
-    # Parse problem parameters
+    #parse problem parameters
     _, graph_type, num_vertices, num_edges = problem
     
-    # Initialize the appropriate NetworkX graph
+    #start the appropriate NetworkX graph
     if graph_type == 'u':
         G = nx.Graph()
     elif graph_type == 'd':
@@ -20,35 +20,35 @@ def create_graph(csv_input):
     else:
         raise ValueError("Unknown graph type: should be 'u' (undirected) or 'd' (directed)")
     
-    # Add nodes
+    #add the nodes
     for item in csv_input[2:2 + num_vertices]:
         _, node = item
         G.add_node(node)
     
-    # Add edges
+    #add the edges 
     for item in csv_input[2 + num_vertices:]:
         _, u, v, w = item
         G.add_edge(u, v, weight=w)
     
-    # Extract instance name
+    #extract the name 
     instance_name = header[2]
     
     return G, instance_name
 
 def visualize_graph(G, instance_name):
     plt.figure(figsize=(8, 6))
-    pos = nx.spring_layout(G)  # Positions for all nodes
+    pos = nx.spring_layout(G)  #positions
 
-    # Draw nodes
+    #draw nodes
     nx.draw_networkx_nodes(G, pos, node_size=700, node_color='lightblue')
 
-    # Draw edges with weights
+    #draw edges 
     if G.is_directed():
         nx.draw_networkx_edges(G, pos, arrowstyle='->', arrowsize=20, edge_color='gray')
     else:
         nx.draw_networkx_edges(G, pos, edge_color='gray')
 
-    # Draw labels
+    #draw labales
     nx.draw_networkx_labels(G, pos, font_size=12, font_weight='bold')
 
     # Draw edge labels (weights)
