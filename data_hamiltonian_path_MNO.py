@@ -54,7 +54,7 @@ def find_hamiltonian_path(graph, current_vertex, path):
     return None  # if no path found
 
 # Make the graph --> list of graphs
-graphs = read_csv('first_part_graph_data.csv')
+graphs = read_csv('check_hamiltonian_paths_MNO.csv')
 
 times = []
 sizes = []
